@@ -1,5 +1,5 @@
 {
-  "name": "notas-vue3-vite-pinia-firebase9",
+  "name": "vue3-vite-pinia-firebase9-antdesign",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -8,8 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ant-design-vue": "^3.1.1",
     "firebase": "^9.6.9",
     "pinia": "^2.0.12",
+    "unplugin-vue-components": "^0.18.5",
     "vue": "^3.2.25",
     "vue-router": "4"
   },

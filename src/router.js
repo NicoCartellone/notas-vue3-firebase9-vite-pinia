@@ -5,6 +5,10 @@ import Home from './Views/Home.vue'
 import Editar from './Views/Editar.vue'
 import Login from './Views/Login.vue'
 import Register from './Views/Register.vue'
+import Notas from './Views/Notas.vue'
+import Tareas from './Views/Tareas.vue'
+import Perfil from './Views/Perfil.vue'
+
 
 const requireAuth = async (to, from, next) => {
     const userStore = useUserStore()
@@ -19,10 +23,13 @@ const requireAuth = async (to, from, next) => {
 }
 
 const routes = [
-    { path: '/', component: Home, beforeEnter: requireAuth },
-    { path: '/editar/:id', component: Editar, beforeEnter: requireAuth },
-    { path: '/login', component: Login },
-    { path: '/register', component: Register }
+    { path: '/', component: Home, name: 'home' },
+    { path: '/editar/:id', component: Editar, beforeEnter: requireAuth, name: 'editar' },
+    { path: '/login', component: Login, name: 'login' },
+    { path: '/register', component: Register, name: 'register' },
+    { path: '/notas', component: Notas, beforeEnter: requireAuth, name: 'notas' },
+    { path: '/tareas', component: Tareas, beforeEnter: requireAuth, name: 'tareas' },
+    { path: '/perfil', component: Perfil, beforeEnter: requireAuth, name: 'perfil' },
 ]
 
 const router = createRouter({

@@ -8,7 +8,7 @@ export const useUserStore = defineStore('userStore', {
     state: () => ({
         userData: null,
         loadingUser: false,
-        loadingSession: false
+        loadingSession: false,
     }),
     actions: {
         async registerUser(email, password) {
@@ -16,9 +16,10 @@ export const useUserStore = defineStore('userStore', {
             try {
                 const { user } = await createUserWithEmailAndPassword(auth, email, password)
                 this.userData = { email: user.email, uid: user.uid }
-                router.push('/')
+                router.push('/login')
             } catch (error) {
                 console.log(error)
+                return error.code
             } finally {
                 this.loadingUser = false
             }
@@ -28,9 +29,10 @@ export const useUserStore = defineStore('userStore', {
             try {
                 const { user } = await signInWithEmailAndPassword(auth, email, password)
                 this.userData = { email: user.email, uid: user.uid }
-                router.push('/')
+                router.push('/notas')
             } catch (error) {
                 console.log(error)
+                return error.code
             } finally {
                 this.loadingUser = false
             }

@@ -7,7 +7,8 @@ import router from '../router'
 export const useDatabaseStore = defineStore('database', {
     state: () => ({
         documents: [],
-        loadingDoc: false
+        loadingDoc: false,
+        loading: false
     }),
     actions: {
         async getNotas() {
@@ -34,6 +35,7 @@ export const useDatabaseStore = defineStore('database', {
             }
         },
         async addNota(name) {
+            this.loading = true
             try {
                 const objetoDoc = {
                     name: name,
@@ -45,12 +47,14 @@ export const useDatabaseStore = defineStore('database', {
                     id: docRef.id
                 })
             } catch (error) {
-                console.log(error)
+                console.log(error.code)
+                return error.code
             } finally {
-
+                this.loading = false
             }
         },
         async deletNota(id) {
+            this.loading = true
             try {
                 const docRef = doc(db, 'notas', id)
                 const docSnap = await getDoc(docRef)
@@ -66,9 +70,9 @@ export const useDatabaseStore = defineStore('database', {
                 await deleteDoc(docRef)
                 this.documents = this.documents.filter(item => item.id !== id)
             } catch (error) {
-                console.log(error)
+                return error.code.message
             } finally {
-
+                this.loading = false
             }
         },
         async leerNota(id) {
