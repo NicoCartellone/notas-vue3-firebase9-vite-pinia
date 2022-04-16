@@ -15,13 +15,8 @@ databaseStore.getNotas();
 
 const confirm = async(id) =>{
   const error = await databaseStore.deletNota(id)
-  if(!error){
-    return  message.success('Se eliminó con exito')
-  } else{
+  if(!error) return message.success('Se eliminó con exito')
     return message.error(error)
-  }
-  
- 
 }
 const cancel = () =>{
   message.error("No se eliminó")

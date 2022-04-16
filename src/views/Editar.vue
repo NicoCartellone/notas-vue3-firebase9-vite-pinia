@@ -18,7 +18,7 @@ const onFinish = async (value) => {
   const error = await databaseStore.updateNota(route.params.id, formState.nota);
   if (!error) {
     formState.nota = "";
-    message.success("Nota Editada");
+    return message.success("Nota Editada");
   }
 
   switch (error) {

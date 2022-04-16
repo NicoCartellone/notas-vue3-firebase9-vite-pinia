@@ -58,8 +58,8 @@
                   Iniciar Sesión
                 </a-button>
               </a-form-item>
-                <GoogleBtn/>
             </a-form>
+                <GoogleBtn/>
           </div>
           </a-col>
         </a-row>

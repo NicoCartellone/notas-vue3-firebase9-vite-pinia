@@ -70,7 +70,7 @@ export const useDatabaseStore = defineStore('database', {
                 await deleteDoc(docRef)
                 this.documents = this.documents.filter(item => item.id !== id)
             } catch (error) {
-                return error.code.message
+                return error.message
             } finally {
                 this.loading = false
             }

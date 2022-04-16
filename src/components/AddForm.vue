@@ -14,7 +14,7 @@ const onFinish = async (value) => {
   const error = await dataBaseStore.addNota(formState.nota);
   if (!error){
     formState.nota = ""
-    message.success("Nota agregada");
+    return message.success("Nota agregada");
   }
 
   switch(error){
