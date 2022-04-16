@@ -96,6 +96,7 @@ export const useDatabaseStore = defineStore('database', {
             }
         },
         async updateNota(id, name) {
+            this.loading = true
             try {
                 const docRef = doc(db, 'notas', id)
                 const docSnap = await getDoc(docRef)
@@ -113,11 +114,12 @@ export const useDatabaseStore = defineStore('database', {
                 })
 
                 this.documents = this.documents.map(item => item.id === id ? ({ ...item, name: name }) : item)
-                router.push('/')
+                router.push('/notas')
             } catch (error) {
                 console.log(error.message)
+                return error.message
             } finally {
-
+                this.loading = false
             }
         }
     }

@@ -24,11 +24,11 @@ watch(
           <img src="../assets/logonotas.png" width="100" />
         </a-col>
 
-        <a-col :span="8" :offset="8">
+        <a-col :span="8" :offset="8" style="justify-content: center;">
           <a-menu
             theme="dark"
             mode="horizontal"
-            :style="{ lineHeight: '64px' }"
+            :style="{ lineHeight: '64px'}"
             v-model:selectedKeys="selectedKeys"
           >
             <a-menu-item key="home" v-if="!userStore.userData">

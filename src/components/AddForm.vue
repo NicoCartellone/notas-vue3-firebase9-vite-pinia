@@ -12,10 +12,16 @@ const formState = reactive({
 const onFinish = async (value) => {
   console.log("todo correcto" + value);
   const error = await dataBaseStore.addNota(formState.nota);
-  if (!error)
+  if (!error){
     formState.nota = ""
     message.success("Nota agregada");
+  }
 
+  switch(error){
+    default:
+      message.error("Ocurrio un error en el servidor. Intente más tarde")
+      break;
+  }
 };
 </script>
 
@@ -32,9 +38,11 @@ const onFinish = async (value) => {
       label="Ingrese una nota"
       :rules="[
         {
-          require: true,
+          required: true,
           whitespace: true,
+          min:10,
           max: 100,
+          message: 'La nota debe contener al menos 10 caracteres'
         },
       ]"
     >

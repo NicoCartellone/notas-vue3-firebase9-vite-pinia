@@ -1,14 +1,17 @@
 <template>
   <a-layout>
-    <a-layout-content style="padding: 0 50px">
-      <div class="content">
+    <a-layout-content style="padding: 0 50px;" >
+      <div class="container">
         <a-row>
           <a-col
             :xs="{ span: 24 }"
             :sm="{ span: 18, offset: 3 }"
             :lg="{ span: 12, offset: 6 }"
           >
+          <div >
+
             <a-form
+              
               name="loginform"
               autocoplete="off"
               layout="vertical"
@@ -55,8 +58,9 @@
                   Iniciar Sesión
                 </a-button>
               </a-form-item>
-            </a-form>
                 <GoogleBtn/>
+            </a-form>
+          </div>
           </a-col>
         </a-row>
       </div>
@@ -102,9 +106,11 @@ const onFinish = async(values) => {
 </script>
 
 <style>
-.content {
+.container {
   background: #fff;
   padding: 24px;
-  
+  min-height: calc(100vh - 64px);
 }
+
+
 </style>

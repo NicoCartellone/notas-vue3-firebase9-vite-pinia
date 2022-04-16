@@ -1,7 +1,7 @@
 <template>
   <a-layout>
     <a-layout-content style="padding: 0 50px">
-      <div class="content">
+      <div class="container">
         <a-row>
           <a-col
             :xs="{ span: 24 }"
@@ -134,9 +134,9 @@ const onFinish = async () => {
 </script>
 
 <style>
-.content {
+.container {
   background: #fff;
   padding: 24px;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
 }
 </style>

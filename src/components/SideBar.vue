@@ -1,5 +1,5 @@
 <template>
-  <a-layout style="min-height: 100vh">
+  <a-layout style="min-height: calc(100vh - 64px)">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
       <div class="avatar">
         <a-avatar :size="50">

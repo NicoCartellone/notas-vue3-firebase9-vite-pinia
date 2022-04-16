@@ -1,0 +1,5 @@
+{
+  "projects": {
+    "default": "mis-notas-vue3-vite-pinia"
+  }
+}
