@@ -7,13 +7,15 @@ const dataBaseStore = useDatabaseStore();
 
 const formState = reactive({
   nota: "",
+  tituloNota:"",
 });
 
 const onFinish = async (value) => {
   console.log("todo correcto" + value);
-  const error = await dataBaseStore.addNota(formState.nota);
+  const error = await dataBaseStore.addNota(formState.nota, formState.tituloNota);
   if (!error){
     formState.nota = ""
+    formState.tituloNota = ""
     return message.success("Nota agregada");
   }
 
@@ -33,6 +35,25 @@ const onFinish = async (value) => {
     :model="formState"
     @finish="onFinish"
   >
+    <a-form-item
+      name="tituloNota"
+      label="Ingrese el titulo de la nota"
+      :rules="[
+        {
+          whitespace: true, 
+          min: 5, 
+          max: 30,
+          message: 'El Titulo debe tener entre 5 y 30 caracteres'
+        }
+      ]"
+    >
+      <a-input
+        v-model:value="formState.tituloNota"
+        :maxlength="30"
+      >
+
+      </a-input>
+    </a-form-item>
     <a-form-item
       name="nota"
       label="Ingrese una nota"

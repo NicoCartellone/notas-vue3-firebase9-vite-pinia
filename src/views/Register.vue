@@ -83,6 +83,9 @@
               </a-form-item>
             </a-form>
             <GoogleBtn />
+            <p>¿Ya tienes cuenta?
+              <router-link to="/login">Inicia Sesión</router-link>
+            </p>
           </a-col>
         </a-row>
       </div>

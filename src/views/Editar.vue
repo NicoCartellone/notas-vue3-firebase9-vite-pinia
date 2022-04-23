@@ -15,7 +15,7 @@ const formState = reactive({
 
 const onFinish = async (value) => {
   console.log("todo correcto" + value);
-  const error = await databaseStore.updateNota(route.params.id, formState.nota);
+  const error = await databaseStore.updateNota(route.params.id, formState.nota, formState.tituloNota);
   if (!error) {
     formState.nota = "";
     return message.success("Nota Editada");
@@ -50,6 +50,25 @@ onMounted(async () => {
           :model="formState"
           @finish="onFinish"
         >
+         <a-form-item
+      name="tituloNota"
+      label="Ingrese el titulo de la nota"
+      :rules="[
+        {
+          whitespace: true, 
+          min: 5, 
+          max: 30,
+          message: 'El Titulo debe tener entre 5 y 30 caracteres'
+        }
+      ]"
+    >
+      <a-input
+        v-model:value="formState.tituloNota"
+        :maxlength="30"
+      >
+
+      </a-input>
+    </a-form-item>
           <a-form-item
             name="nota"
             

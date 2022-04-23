@@ -45,7 +45,7 @@ const cancel = () =>{
         <a-card
           v-for="item of databaseStore.documents"
           :key="item.id"
-          :title="userStore.userData.email"
+          :title="item.titulo"
           class="card"
         >
           <template #extra>
@@ -71,7 +71,7 @@ const cancel = () =>{
                 >Editar</a-button>
             </a-space>
           </template>
-          <p>{{ item.name }}</p>
+          <pre>{{ item.name }}</pre>
         </a-card>
       </a-space>
     </div>

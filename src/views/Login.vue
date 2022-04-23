@@ -58,8 +58,13 @@
                   Iniciar Sesión
                 </a-button>
               </a-form-item>
-            </a-form>
                 <GoogleBtn/>
+                <div>
+                  <p>¿No tienes cuenta?
+                    <router-link to="/register">Registrate</router-link>
+                  </p>
+                </div>
+            </a-form>
           </div>
           </a-col>
         </a-row>
@@ -107,10 +112,15 @@ const onFinish = async(values) => {
 
 <style>
 .container {
+  
   background: #fff;
   padding: 24px;
   min-height: calc(100vh - 64px);
 }
 
-
+.formulario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

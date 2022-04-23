@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { auth } from '../firebaseConfig'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
+import { auth, db } from '../firebaseConfig'
 import router from '../router'
 import { useDatabaseStore } from './database'
+import { doc, getDoc, setDoc } from 'firebase/firestore/lite'
+import { message } from 'ant-design-vue'
 
 export const useUserStore = defineStore('userStore', {
     state: () => ({
@@ -27,9 +29,63 @@ export const useUserStore = defineStore('userStore', {
         async loginUser(email, password) {
             this.loadingUser = true
             try {
-                const { user } = await signInWithEmailAndPassword(auth, email, password)
-                this.userData = { email: user.email, uid: user.uid }
+                const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+                const docRef = doc(db, 'users', user.uid)
+                const docSpan = await getDoc(docRef)
+                if (docSpan.exists()) {
+                    this.userData = { ...docSpan.data() }
+                } else {
+                    await setDoc(docRef, {
+                        email: user.email,
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL
+                    })
+                    this.userData = {
+                        email: user.email,
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL
+                    }
+                }
+
                 router.push('/notas')
+            } catch (error) {
+                console.log(error)
+                return error.code
+            } finally {
+                this.loadingUser = false
+            }
+        },
+        async singInWithGoogle() {
+            this.loadingUser = true
+            const provider = new GoogleAuthProvider()
+            try {
+                const { user } = await signInWithPopup(auth, provider)
+                const docRef = doc(db, 'users', user.uid)
+                const docSpan = await getDoc(docRef)
+                if (docSpan.exists()) {
+                    this.userData = { ...docSpan.data() }
+
+                } else {
+                    await setDoc(docRef, {
+                        email: user.email,
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL
+                    })
+                    this.userData = {
+                        email: user.email,
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL
+                    }
+                }
+
+                router.push('/notas')
+                console.log(this.userData)
+                message.success(`Bienvenido ${user.displayName}`)
             } catch (error) {
                 console.log(error)
                 return error.code
@@ -52,7 +108,7 @@ export const useUserStore = defineStore('userStore', {
             return new Promise((resolve, reject) => {
                 const unsuscribe = onAuthStateChanged(auth, user => {
                     if (user) {
-                        this.userData = { email: user.email, password: user.password };
+                        this.userData = { email: user.email, password: user.password, photoURL: user.photoURL };
                     } else {
                         this.userData = null
                         const databaseStore = useDatabaseStore()
@@ -61,6 +117,7 @@ export const useUserStore = defineStore('userStore', {
                     resolve(user)
                 }, e => reject((e)))
                 unsuscribe()
+
             })
         }
     },

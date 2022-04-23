@@ -9,7 +9,7 @@ import SideBar from '../components/SideBar.vue'
   </a-col>
   <a-col :span="20.5">
   
-    <h1 class="texto">En proceso....</h1>
+    <h1 class="texto">Perfil En proceso....</h1>
   </a-col>
 </a-row>
     

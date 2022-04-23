@@ -4,7 +4,7 @@
     <a-carousel
       arrows
       autoplay
-      
+      style="padding-top: 5px;"
     >
       <template #prevArrow>
         <div class="custom-slick-arrow" style="left: 10px; z-index: 1">
@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* For demo */
+  
 .ant-carousel :deep(.slick-slide) {
   text-align: center;
   height: 500px;
@@ -69,10 +69,14 @@ export default defineComponent({
 .ant-carousel :deep(.slick-slide img) {
   display: block;
   margin: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  
 }
 .container {
   background: "#fff";
   padding: 24px;
-  min-height: calc(100vh - 700px)
+  min-height: calc(100vh - 570px)
 }
 </style>

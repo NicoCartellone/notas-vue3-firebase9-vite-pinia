@@ -22,7 +22,6 @@ export const useDatabaseStore = defineStore('database', {
                 const q = query(collection(db, "notas"), where("user", "==", auth.currentUser.uid))
                 const querySnapshot = await getDocs(q)
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.id, doc.data())
                     this.documents.push({
                         id: doc.id,
                         ...doc.data()
@@ -34,11 +33,12 @@ export const useDatabaseStore = defineStore('database', {
                 this.loadingDoc = false
             }
         },
-        async addNota(name) {
+        async addNota(name, titulo) {
             this.loading = true
             try {
                 const objetoDoc = {
                     name: name,
+                    titulo: titulo,
                     user: auth.currentUser.uid
                 }
                 const docRef = await addDoc(collection(db, "notas"), objetoDoc)
@@ -95,7 +95,7 @@ export const useDatabaseStore = defineStore('database', {
 
             }
         },
-        async updateNota(id, name) {
+        async updateNota(id, name, titulo) {
             this.loading = true
             try {
                 const docRef = doc(db, 'notas', id)
@@ -110,10 +110,11 @@ export const useDatabaseStore = defineStore('database', {
                 }
 
                 await updateDoc(docRef, {
-                    name: name
+                    name: name,
+                    titulo: titulo
                 })
 
-                this.documents = this.documents.map(item => item.id === id ? ({ ...item, name: name }) : item)
+                this.documents = this.documents.map(item => item.id === id ? ({ ...item, name: name, titulo: titulo }) : item)
                 router.push('/notas')
             } catch (error) {
                 console.log(error.message)
