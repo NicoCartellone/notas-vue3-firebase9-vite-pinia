@@ -2,7 +2,7 @@
   <a-layout style="min-height: calc(100vh - 64px)">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
       <div class="avatar">
-        <a-avatar :src="userStore.user" :size="50"> 
+        <a-avatar :src="userStore.userData.email" :size="50"> 
         </a-avatar>
       </div>
 

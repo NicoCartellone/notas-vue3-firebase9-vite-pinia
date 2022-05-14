@@ -15,7 +15,11 @@ const formState = reactive({
 
 const onFinish = async (value) => {
   console.log("todo correcto" + value);
-  const error = await databaseStore.updateNota(route.params.id, formState.nota, formState.tituloNota);
+  const error = await databaseStore.updateNota(
+    route.params.id,
+    formState.nota,
+    formState.tituloNota
+  );
   if (!error) {
     formState.nota = "";
     return message.success("Nota Editada");
@@ -29,7 +33,9 @@ const onFinish = async (value) => {
 };
 
 onMounted(async () => {
-  formState.nota = await databaseStore.leerNota(route.params.id);
+  [formState.tituloNota, formState.nota] = await databaseStore.leerNota(
+    route.params.id
+  );
 });
 </script>
 
@@ -42,68 +48,65 @@ onMounted(async () => {
       :span="20.5"
       style="padding: 0 50px; display: block; margin-top: 1rem"
     >
-      <a-card class="cardEditar" title="Editar nota">
-        <a-form
-          name="editform"
-          autocomplete="off"
-          layout="vertical"
-          :model="formState"
-          @finish="onFinish"
-        >
-         <a-form-item
-      name="tituloNota"
-      label="Ingrese el titulo de la nota"
-      :rules="[
-        {
-          whitespace: true, 
-          min: 5, 
-          max: 30,
-          message: 'El Titulo debe tener entre 5 y 30 caracteres'
-        }
-      ]"
-    >
-      <a-input
-        v-model:value="formState.tituloNota"
-        :maxlength="30"
-      >
-
-      </a-input>
-    </a-form-item>
-          <a-form-item
-            name="nota"
-            
-            :rules="[
-              {
-                required: true,
-                whitespace: true,
-                max: 100,
-                min: 10,
-                message: 'La nota debe contener al menos 10 caracteres',
-              },
-            ]"
+      <div class="cardContainer">
+        <a-card class="cardEditar" title="Editar nota">
+          <a-form
+            name="editform"
+            autocomplete="off"
+            layout="vertical"
+            :model="formState"
+            @finish="onFinish"
           >
-            <a-textarea
-              v-model:value="formState.nota"
-              show-count
-              :maxlength="100"
-              style="height: 100px"
+            <a-form-item
+              name="tituloNota"
+              label="Ingrese el titulo de la nota"
+              :rules="[
+                {
+                  whitespace: true,
+                  min: 5,
+                  max: 30,
+                  message: 'El Titulo debe tener entre 5 y 30 caracteres',
+                },
+              ]"
             >
-              <br />
-              <br />
-              <br />
-            </a-textarea>
-          </a-form-item>
-          <a-form-item>
-            <a-button
-              type="primary"
-              html-type="submit"
-              :loading="databaseStore.loading"
+              <a-input v-model:value="formState.tituloNota" :maxlength="30">
+              </a-input>
+            </a-form-item>
+            <a-form-item
+              name="nota"
+              :rules="[
+                {
+                  required: true,
+                  whitespace: true,
+                  max: 100,
+                  min: 10,
+                  message: 'La nota debe contener al menos 10 caracteres',
+                },
+              ]"
             >
-              Editar nota
-            </a-button>
-          </a-form-item>
-        </a-form>
-      </a-card>
+              <a-textarea
+                v-model:value="formState.nota"
+                show-count
+                :maxlength="100"
+                style="height: 100px"
+              >
+                <br />
+                <br />
+                <br />
+              </a-textarea>
+            </a-form-item>
+            <a-form-item>
+              <a-button
+                type="primary"
+                html-type="submit"
+                :loading="databaseStore.loading"
+              >
+                Editar nota
+              </a-button>
+            </a-form-item>
+          </a-form>
+        </a-card>
+      </div>
     </a-col>
   </a-row>
 </template>
@@ -112,5 +115,11 @@ onMounted(async () => {
 .cardEditar {
   width: 400px;
   border-color: gray;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

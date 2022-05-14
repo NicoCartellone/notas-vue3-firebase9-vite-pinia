@@ -87,8 +87,10 @@ export const useDatabaseStore = defineStore('database', {
                 if (docSnap.data().user !== auth.currentUser.uid) {
                     throw new Error("Nota de otro usuario")
                 }
+                const name = docSnap.data().name
+                const title = docSnap.data().titulo
+                return [title, name]
 
-                return docSnap.data().name
             } catch (error) {
                 console.log(error.message)
             } finally {
